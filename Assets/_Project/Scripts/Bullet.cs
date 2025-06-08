@@ -17,7 +17,9 @@ public class Bullet : MonoBehaviour
             e.TakeDamage();
             if(e.GetLifePoints() == 0)
             {
-                Destroy(collision.gameObject);
+                e.setDeath(true);
+                e.GetAnim().SetBool("isDeath", true);
+                Destroy(collision.gameObject, 1f);
             }
             Destroy(gameObject);
         }

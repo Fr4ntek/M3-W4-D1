@@ -6,6 +6,7 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     private Rigidbody2D _rb;
+    private Animator _animator;
 
     [SerializeField]
     private float _speed = 5f;
@@ -17,6 +18,7 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         _rb = GetComponent<Rigidbody2D>();
+        _animator = GetComponent<Animator>();
     }
 
     void Update()
@@ -24,6 +26,12 @@ public class PlayerController : MonoBehaviour
         h = Input.GetAxis("Horizontal");
         v = Input.GetAxis("Vertical");
         direction = new Vector2(h, v);
+
+        if(_animator != null && (h != 0 || v != 0))
+        {
+            _animator.SetFloat("hDir", h);
+            _animator.SetFloat("vDir", v);
+        }
     }
 
     void FixedUpdate()

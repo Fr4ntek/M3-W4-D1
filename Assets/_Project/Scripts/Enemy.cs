@@ -7,29 +7,36 @@ public class Enemy : MonoBehaviour
 {
     [SerializeField]
     private float _speed = 1f;
-
     private PlayerController _player;
-
     private int _lifePoints = 3;
-
-    private AudioSource _audioSource;   
+    private AudioSource _audioSource;
+    private Animator _anim;
+    private bool _isDeath = false;
 
     private void Awake()
     {
         _player = Object.FindObjectOfType<PlayerController>();
+        
     }
     void Start()
     {
-      _audioSource = GetComponent<AudioSource>();
+        _audioSource = GetComponent<AudioSource>();
+        _anim = GetComponent<Animator>();
+        _anim.SetBool("isDeath", false);
     }
 
     void Update()
     {
-        EnemyMovement();
+        if (!_isDeath)
+        {
+            EnemyMovement();
+        }
+        
     }
 
     public void EnemyMovement()
     {
+
         float dir = _speed * Time.deltaTime;
         if (_player != null)
         {
@@ -55,5 +62,9 @@ public class Enemy : MonoBehaviour
 
     public int GetLifePoints() => _lifePoints;
     public void SetLifePoints(int lifePoints) => _lifePoints = lifePoints;
+
+    public Animator GetAnim() => _anim;
+    public bool isDeath() => _isDeath;
+    public void setDeath(bool isDeath) => _isDeath = isDeath;   
 
 }
